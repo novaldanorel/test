@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://bgwgbbi2k1s24"]
+
+[ext_resource type="Texture2D" uid="uid://c2rsibo7yn8qa" path="res://enemy/Sprite Sheet - Straw Training Dummy.png" id="1_mvvu1"]
+[ext_resource type="PackedScene" uid="uid://lic674opsltk" path="res://hitboxComponent.tscn" id="2_hv4bk"]
+[ext_resource type="PackedScene" uid="uid://cxr7cxjojimj6" path="res://health_component.tscn" id="3_qr8xe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_05s6o"]
+atlas = ExtResource("1_mvvu1")
+region = Rect2(0, 0, 128, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_anlw3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_05s6o")
+}],
+"loop": true,
+"name": &"diam",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u64o8"]
+radius = 7.0
+height = 56.0
+
+[node name="enemy2" type="CharacterBody2D"]
+
+[node name="hitbox" type="CollisionShape2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_anlw3")
+animation = &"diam"
+
+[node name="hitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("2_hv4bk")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitboxComponent"]
+position = Vector2(0, 4)
+shape = SubResource("CapsuleShape2D_u64o8")
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_qr8xe")]
